@@ -1,0 +1,53 @@
+CREATE TABLE IF NOT EXISTS exportacao (
+    CO_ANO      TEXT NOT NULL,
+    CO_MES      TEXT NOT NULL,
+    CO_NCM      TEXT NOT NULL,
+    CO_UNID     TEXT NOT NULL,
+    CO_PAIS     TEXT NOT NULL,
+    SG_UF_NCM   TEXT NOT NULL,
+    CO_VIA      TEXT NOT NULL,
+    CO_URF      TEXT NOT NULL,
+    QT_ESTAT    INTEGER NOT NULL,
+    KG_LIQUIDO  INTEGER NOT NULL,
+    VL_FOB      INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS importacao (
+    CO_ANO      TEXT NOT NULL,
+    CO_MES      TEXT NOT NULL,
+    CO_NCM      TEXT NOT NULL,
+    CO_UNID     TEXT NOT NULL,
+    CO_PAIS     TEXT NOT NULL,
+    SG_UF_NCM   TEXT NOT NULL,
+    CO_VIA      TEXT NOT NULL,
+    CO_URF      TEXT NOT NULL,
+    QT_ESTAT    INTEGER NOT NULL,
+    KG_LIQUIDO  INTEGER NOT NULL,
+    VL_FOB      INTEGER NOT NULL,
+    VL_FRETE    INTEGER NOT NULL,
+    VL_SEGURO   INTEGER NOT NULL
+
+);
+
+SELECT 
+    CO_ANO AS "ano",
+	 SUM(VL_FOB) AS "importacao",
+	 COUNT(CO_ANO) AS "linhas" 
+
+FROM 
+    importacao
+
+GROUP BY 
+    CO_ANO;
+
+
+SELECT 
+    CO_ANO AS "ano",
+	 SUM(VL_FOB) AS "exportacao",
+	 COUNT(CO_ANO) AS "linhas" 
+
+FROM 
+    exportacao
+
+GROUP BY 
+    CO_ANO;
