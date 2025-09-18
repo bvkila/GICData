@@ -5,19 +5,25 @@ caminho = r"00. DADOS\base\comercio.db"
 conn = sqlite3.connect(caminho)
 
 df = pd.read_sql_query('''
-                SELECT
-                    CO_ANO,
-                    SUBSTR(CO_NCM, 1, 2) AS capitulo,
-                    CO_PAIS,
-                    SUM(VL_FOB_EXP) AS exportacoes
+                        SELECT
+                            CO_ANO,
+                            CO_MES,
+                            SUBSTR(CO_NCM, 1, 2) AS capitulo,
+                            CO_PAIS,
+                            SUM(VL_FOB_EXP) AS exportacoes
 
-                FROM
-                    comercio
+                        FROM
+                            comercio
 
-                GROUP BY
-                    CO_ANO,
-                    SUBSTR(CO_NCM, 1, 2),
-                    CO_PAIS
+                        GROUP BY
+                            CO_ANO,
+                            CO_MES,
+                            SUBSTR(CO_NCM, 1, 2),
+                            CO_PAIS
+                            
+                        HAVING
+                            exportacoes > 0
                        ''', conn)
 
-df.to_csv('dados_Marta.csv', index=False)
+print(df)
+df.to_excel('dados_Marta.xlsx', index=False)
